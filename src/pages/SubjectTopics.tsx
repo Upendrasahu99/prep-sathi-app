@@ -1,12 +1,14 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
 
-const SelectTestMode = () => {
+const SubjectTopics = () => {
   return (
-    <div>SelectTestMode
+    <div>
+      Resources
+      go to test
       <Outlet/>
     </div>
   )
 }
 
-export default SelectTestMode
+export default SubjectTopics
