@@ -3,7 +3,7 @@ import {createBrowserRouter, RouterProvider, Navigate} from 'react-router-dom';
 import Subjects from '../pages/Subjects';
 import SubjectTopics from '../pages/SubjectTopics';
 import SelectMode from '../pages/SelectMode';
-import Topic from '../pages/Topic';
+import Topics from '../pages/Topics';
 import Test from '../pages/Test';
 import Result from '../pages/Result';
 import MainLayout from '../layouts/MainLayout';
@@ -24,28 +24,24 @@ const route = createBrowserRouter([
         element: <Subjects/>
       },
       {
-        path: ':subjectName',
+        path: 'subjects/:subjectName',
         element: <SubjectTopics/>,
-        children: [
-          {
-            path: ':topicName',
-            element: <Topic/>,
-            children:[
-              {
-                path: 'select-mode',
-                element: <SelectMode/>
-              },
-              {
-                path: 'test',
-                element: <Test/>
-              },
-              {
-                path: 'result',
-                element: <Result/>
-              }
-            ]
-          }
-        ]
+      },
+      {
+        path: 'topic/:subjectName/:topicName',
+        element: <Topics/>,
+      },
+      {
+        path: 'select-mode/:subjectName/:topicName',
+        element: <SelectMode/>
+      },
+      {
+        path: 'test/:subjectName/:topicName',
+        element: <Test/>
+      },
+      {
+        path: 'result/:subjectName/:topicName',
+        element: <Result/>
       }
     ]
   },
