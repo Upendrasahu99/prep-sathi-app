@@ -27,10 +27,10 @@ const route = createBrowserRouter([
         path: 'subjects/:subjectName',
         element: <SubjectTopics/>,
       },
-      {
-        path: 'topic/:subjectName/:topicName',
-        element: <Topics/>,
-      },
+      // {
+      //   path: 'topic/:subjectName/:topicName',
+      //   element: <Topics/>,
+      // },
       {
         path: 'select-mode/:subjectName/:topicName',
         element: <SelectMode/>
