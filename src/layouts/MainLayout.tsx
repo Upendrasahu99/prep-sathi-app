@@ -1,12 +1,15 @@
 import { Outlet } from 'react-router-dom'
 import Navbar from '../components/shared/Navbar'
+import MainContextProvider from '../contexts/MainContextProvider'
 
 const MainLayout = () => {
   return (
-    <div>
-      <Navbar/>
-      <Outlet/>
-    </div>
+    <MainContextProvider>
+      <div>
+        <Navbar/>
+        <Outlet/>
+      </div>
+    </MainContextProvider>
   )
 }
 

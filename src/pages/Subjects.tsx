@@ -1,25 +1,15 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import { Link } from 'react-router-dom';
+import { MainContext } from '../contexts/MainContextProvider';
 
 const Subjects = () => {
-  const subjects = [
-    "mathematics",
-    "reasoning",
-    "history",
-    "geography",
-    "science",
-    "hindi",
-    "english",
-    "economy",
-    "currentaffairs",
-    "computers"
-  ];
-  
+  const {subjects} = useContext(MainContext);
+
   return (
-    <ul className="menu menu-md bg-base-200 rounded-box w-56 mx-auto">
+    <ul className="menu menu-md bg-base-200 rounded-box w-full mx-auto">
       {
-        subjects.map((subject, index)=>
-            <li key={index}><Link to={`/subjects/${subject}`}>{subject}</Link></li>
+        subjects.map((data)=>
+            <li key={data.id}><Link to={`/subjects/${data.subject}`}>{data.subject}</Link></li>
         )
       }
     </ul>
