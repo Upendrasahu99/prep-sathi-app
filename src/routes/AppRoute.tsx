@@ -8,6 +8,8 @@ import Test from '../pages/Test';
 import Result from '../pages/Result';
 import MainLayout from '../layouts/MainLayout';
 import NotFound from '../pages/NotFound';
+import SingleQuestionTest from '../pages/SingleQuestionTest';
+import AllQuestionTest from '../pages/AllQuestionTest';
 
 
 const route = createBrowserRouter([
@@ -36,8 +38,12 @@ const route = createBrowserRouter([
         element: <SelectMode/>
       },
       {
-        path: 'test/:subjectName/:topicName',
-        element: <Test/>
+        path: 'test-single-question/:subjectName/:topicName',
+        element: <SingleQuestionTest/>
+      },
+      {
+        path: 'test-all-questions/:subjectName/:topicName',
+        element: <AllQuestionTest/>
       },
       {
         path: 'result/:subjectName/:topicName',
