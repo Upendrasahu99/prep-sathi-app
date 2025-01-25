@@ -1,8 +1,11 @@
 import React from 'react'
+import TestSetting from '../components/testSetting/TestSetting'
 
 const SingleQuestionTest = () => {
   return (
-    <div>single question</div>
+    <div>
+      <TestSetting/>
+    </div>
   )
 }
 
