@@ -1,10 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import TestSetting from '../components/testSetting/TestSetting'
 
+import AllQuestionList from '../components/AllQuestionTest/AllQuestionList';
+
 const AllQuestionTest = () => {
+  const [startTest, setStartTest] = useState(false);
+
+  const handleStartTest = () => {
+    setStartTest(true)
+  }
   return (
     <div>
-      <TestSetting/>
+      {
+        startTest 
+        ?
+        <AllQuestionList/>
+        :
+        <TestSetting handleStartTest={handleStartTest}/>
+      }
     </div>
   )
 }

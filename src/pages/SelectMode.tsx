@@ -8,7 +8,8 @@ const SelectMode = () => {
 
   return (
     <ul className="menu bg-base-200 rounded-box ">
-      <li><Link to= {`/test-single-question/${subject}/${topic}`}>Question-by-question</Link></li>
+      {/* <li><Link to= {`/test-single-question/${subject}/${topic}`}>Question-by-question</Link></li> */}
+      <li className='disabled ps-3'>Question-by-question</li>
       <li><Link to= {`/test-all-questions/${subject}/${topic}`}>Full test</Link></li>
     </ul>
   )

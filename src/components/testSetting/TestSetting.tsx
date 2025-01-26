@@ -1,6 +1,6 @@
 import React from 'react'
 
-const TestSetting = () => {
+const TestSetting = ({handleStartTest}) => {
   const hours = [0, 1, 2, 3];
   const minutes = [];
   const seconds = [];
@@ -37,7 +37,7 @@ const TestSetting = () => {
         <input type="text" placeholder="Type here" className="input input-md input-bordered w-full" />
       </label>
 
-      <button className="btn btn-wide">Start Test</button>
+      <button className="btn btn-wide" onClick={handleStartTest}>Start Test</button>
     </div>
   )
 }
