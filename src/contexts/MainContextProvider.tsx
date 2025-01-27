@@ -10,14 +10,18 @@ const MainContextProvider = ({children}) => {
   const [subjectId, setSubjectId] = useState(0);
   const [topic, setTopic] = useState('');
   const topics = topicArr.filter((data) => data.subjectId === subjectId);
-  const value = {
+  const [submittedData, setSubmittedData] = useState([]);
+
+  const value = { 
     subjects,
     topics,
     setSubjectId,
     subject,
     setSubject, 
     topic,
-    setTopic
+    setTopic,
+    submittedData,
+    setSubmittedData
   }
   return (
     <MainContext.Provider value={value}>

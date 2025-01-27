@@ -15,10 +15,8 @@ const AllQuestionTest = () => {
       {
         startTest 
         ?
-        <div className='flex flex-col items-center gap-5 mb-5'>
-          <AllQuestionList/>
-          <SubmitButton/>
-        </div>
+
+        <AllQuestionList/>
         
         :
         <TestSetting handleStartTest={handleStartTest}/>

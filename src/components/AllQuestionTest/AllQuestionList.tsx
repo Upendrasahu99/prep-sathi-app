@@ -1,20 +1,31 @@
-import React from 'react'
-
+import React, { useContext } from 'react'
 import {logicalReasoning} from "../../data/questionData"
-const AllQuestionList = () => {
-  const questionData = logicalReasoning;
+import { MainContext } from '../../contexts/MainContextProvider';
 
+const AllQuestionList = () => {
+  const {setSubmittedData, topic, subject} = useContext(MainContext);
+  const questionData = logicalReasoning;
+  
+  const onOptionClick = (e, index) => {
+    questionData[index].selectedOption = e.target.value;
+  } 
+
+  const onSubmitTest = () => {
+    setSubmittedData(questionData);
+    window.location.href = `/result/${subject}/${topic}`;
+    // console.log(questionData);
+  }
   return (
-    <div className='w-full flex flex-col items-center gap-7'>
+    <div className='w-full flex flex-col items-center gap-7 mb-5'>
       {
-        questionData.map((question, index) => (
-          <div key={index} className="card bg-base-100  w-full  md:w-1/2 shadow-xl">
+        questionData.map((question, qIndex) => (
+          <div key={qIndex} className="card bg-base-100  w-full  md:w-1/2 shadow-xl">
             <div className="card-body">
               <div>
-                <div className="badge badge-neutral">{index+1}.</div> {question.questionHindi}
+                <div className="badge badge-neutral">{qIndex+1}.</div> {question.questionHindi}
               </div>
               <div>
-                <div className="badge badge-neutral">{index+1}.</div> {question.questionEnglish}
+                <div className="badge badge-neutral">{qIndex+1}.</div> {question.questionEnglish}
               </div>
               <div className='flex flex-col gap-5 mt-5'>
                 {                 
@@ -28,7 +39,12 @@ const AllQuestionList = () => {
                             <label htmlFor={`${question.questionId}${option.id}`} className='cursor-pointer'>{question.questionOptionsEnglish[index].text}</label>
                           </div>
                         </span>
-                        <input id={`${question.questionId}${option.id}`} type="radio" name={`${question.questionId}`} className="radio" />
+                        <input 
+                        id={`${question.questionId}${option.id}`} 
+                        type="radio" 
+                        name={`${question.questionId}`} 
+                        value={option.id}
+                        className="radio" onChange={(e) => {onOptionClick(e, qIndex)}} />
                       </label>
                     </div>
 
@@ -39,6 +55,7 @@ const AllQuestionList = () => {
           </div>
         ))
       }
+      <input type="submit" value="Submit" className="btn btn-wide btn-outline" onClick={() => {onSubmitTest()}}/>
     </div>
   )
 }
