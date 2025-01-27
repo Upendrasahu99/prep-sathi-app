@@ -7,7 +7,7 @@ const AllQuestionList = () => {
   return (
     <div className='w-full flex flex-col items-center gap-7'>
       {
-        logicalReasoning.map((question, index) => (
+        questionData.map((question, index) => (
           <div key={index} className="card bg-base-100  w-full  md:w-1/2 shadow-xl">
             <div className="card-body">
               <div>
