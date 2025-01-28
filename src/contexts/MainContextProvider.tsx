@@ -23,6 +23,7 @@ const MainContextProvider = ({children}) => {
     submittedData,
     setSubmittedData
   }
+
   return (
     <MainContext.Provider value={value}>
       {children}

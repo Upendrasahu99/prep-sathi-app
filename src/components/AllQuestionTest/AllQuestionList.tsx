@@ -1,18 +1,21 @@
 import React, { useContext } from 'react'
 import {logicalReasoning} from "../../data/questionData"
 import { MainContext } from '../../contexts/MainContextProvider';
+import { useNavigate } from 'react-router-dom';
 
 const AllQuestionList = () => {
   const {setSubmittedData, topic, subject} = useContext(MainContext);
   const questionData = logicalReasoning;
-  
+  const navigate = useNavigate();
+
   const onOptionClick = (e, index) => {
     questionData[index].selectedOption = e.target.value;
   } 
 
   const onSubmitTest = () => {
     setSubmittedData(questionData);
-    window.location.href = `/result/${subject}/${topic}`;
+
+    navigate(`/result/${subject}/${topic}`);
     // console.log(questionData);
   }
   return (
