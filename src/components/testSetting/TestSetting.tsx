@@ -1,12 +1,24 @@
-import React from 'react'
+import React, { useState, useContext } from 'react'
+import { MainContext } from '../../contexts/MainContextProvider';
 
-const TestSetting = ({handleStartTest}) => {
+const TestSetting = () => {
+  const {setInputTime, setStartTest} = useContext(MainContext);
+
   const hours = [0, 1, 2, 3];
   const minutes = [];
   const seconds = [];
+  const [inputHour, setInputHour] = useState(0);
+  const [inputMinute, setInputMinute] = useState(0);
+  const [inputSecond, setInputSecond] = useState(0);
+  
   for(let i = 0; i < 60; i++){
     minutes.push(i);
     seconds.push(i);
+  }
+
+  const handleStartTest = () => {
+    setInputTime(`${inputHour}:${inputMinute}:${inputSecond}`)
+    setStartTest(true)
   }
   return (
     <div className='flex flex-col items-center gap-5'>
@@ -16,15 +28,15 @@ const TestSetting = ({handleStartTest}) => {
           <span className="label-text">Select duration</span>
         </div>
         <div className='grid grid-cols-3 w-full max-w-xs mx-auto'>
-          <select className="select select-bordered select-md" defaultValue={0}>
+          <select className="select select-bordered select-md" defaultValue={0} onChange={(e) => setInputHour(`${e.target.value}`)}>
             {hours.map((data, index) => <option key={index} value={data}>{data} hour</option>)}
           </select>
 
-          <select className="select select-bordered select-md" defaultValue={0}>
+          <select className="select select-bordered select-md" defaultValue={0} onChange={(e) => setInputMinute(`${e.target.value}`)}>
             {minutes.map((data, index) => <option key={index} value={data}>{data} min</option>)}
           </select>
 
-          <select className="select select-bordered select-md" defaultValue={0}>
+          <select className="select select-bordered select-md" defaultValue={0} onChange={(e) => setInputSecond(`${e.target.value}`)}>
             {seconds.map((data, index) => <option key={index} value={data}>{data} sec</option>)}
           </select>
         </div>

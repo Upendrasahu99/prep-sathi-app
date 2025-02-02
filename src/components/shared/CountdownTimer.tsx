@@ -1,12 +1,13 @@
-import { useState, useEffect } from "react";
-// import { useCountdown } from "../context/CountdownContext"; // Adjust path as needed
+import { useState, useEffect, useContext } from "react";
+import { MainContext } from "../../contexts/MainContextProvider";
 
 const CountdownTimer = () => {
-  // const { inputTime, isActive } = useCountdown();
-  const inputTime= '00:04:49';
-  const isActive = true;
-  const [time, setTime] = useState(0);
+  const {inputTime, startTest, setTotalTimeTaken} = useContext(MainContext);
 
+  // const inputTime= '00:04:49';
+  // const startTest = true;
+  const [time, setTime] = useState(0);
+  
   // Convert inputTime (H:M:S) to total seconds when it changes
   useEffect(() => {
     if (inputTime) {
@@ -18,13 +19,13 @@ const CountdownTimer = () => {
   // Countdown logic
   useEffect(() => {
     let timer;
-    if (isActive && time > 0) {
+    if (startTest && time > 0) {
       timer = setTimeout(() => {
         setTime((prev) => prev - 1);
       }, 1000);
     }
     return () => clearTimeout(timer);
-  }, [isActive, time]);
+  }, [startTest, time]);
 
   const hours = Math.floor(time / 3600);
   const minutes = Math.floor((time % 3600) / 60);

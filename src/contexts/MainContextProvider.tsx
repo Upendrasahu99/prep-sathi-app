@@ -11,6 +11,9 @@ const MainContextProvider = ({children}) => {
   const [topic, setTopic] = useState('');
   const topics = topicArr.filter((data) => data.subjectId === subjectId);
   const [submittedData, setSubmittedData] = useState([]);
+  const [inputTime, setInputTime] = useState('00:00:00');
+  const [startTest, setStartTest] = useState(false);
+  const [totalTimeTaken, setTotalTimeTaken] = useState(0);
 
   const value = { 
     subjects,
@@ -21,7 +24,13 @@ const MainContextProvider = ({children}) => {
     topic,
     setTopic,
     submittedData,
-    setSubmittedData
+    setSubmittedData,
+    inputTime,
+    setInputTime,
+    startTest,
+    setStartTest,
+    totalTimeTaken,
+    setTotalTimeTaken  
   }
 
   return (

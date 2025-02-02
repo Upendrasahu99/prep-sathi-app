@@ -1,25 +1,19 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import TestSetting from '../components/testSetting/TestSetting'
 
 import AllQuestionList from '../components/AllQuestionTest/AllQuestionList';
-import SubmitButton from '../components/AllQuestionTest/SubmitButton';
+import { MainContext } from '../contexts/MainContextProvider';
 
 const AllQuestionTest = () => {
-  const [startTest, setStartTest] = useState(false);
-
-  const handleStartTest = () => {
-    setStartTest(true)
-  }
+  const {startTest} = useContext(MainContext);
   return (
     <div>
       {
         startTest 
         ?
-
         <AllQuestionList/>
-        
         :
-        <TestSetting handleStartTest={handleStartTest}/>
+        <TestSetting />
       }
     </div>
   )
