@@ -4,7 +4,7 @@ import { MainContext } from '../../contexts/MainContextProvider';
 import { useNavigate } from 'react-router-dom';
 
 const AllQuestionList = () => {
-  const {setSubmittedData, topic, subject} = useContext(MainContext);
+  const {setSubmittedData, topic, subject, setStartTest, startTime, setTotalTimeTaken} = useContext(MainContext);
   const questionData = logicalReasoning;
   const navigate = useNavigate();
 
@@ -12,8 +12,21 @@ const AllQuestionList = () => {
     questionData[index].selectedOption = e.target.value;
   } 
 
+
+  // Function to format time in HH:mm:ss
+  const formatTime = (seconds) => {
+    const hrs = String(Math.floor(seconds / 3600)).padStart(2, "0");
+    const mins = String(Math.floor((seconds % 3600) / 60)).padStart(2, "0");
+    const secs = String(seconds % 60).padStart(2, "0");
+    return `${hrs}:${mins}:${secs}`;
+  };
+
+
   const onSubmitTest = () => {
+    const currentTime = Date.now();
+    setTotalTimeTaken(formatTime(Math.floor((currentTime - startTime)/1000)));
     setSubmittedData(questionData);
+    setStartTest(false);
 
     navigate(`/result/${subject}/${topic}`);
     // console.log(questionData);

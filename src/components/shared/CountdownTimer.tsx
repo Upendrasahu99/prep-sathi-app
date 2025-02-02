@@ -4,8 +4,6 @@ import { MainContext } from "../../contexts/MainContextProvider";
 const CountdownTimer = () => {
   const {inputTime, startTest, setTotalTimeTaken} = useContext(MainContext);
 
-  // const inputTime= '00:04:49';
-  // const startTest = true;
   const [time, setTime] = useState(0);
   
   // Convert inputTime (H:M:S) to total seconds when it changes

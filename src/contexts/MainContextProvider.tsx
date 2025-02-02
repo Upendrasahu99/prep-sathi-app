@@ -13,7 +13,10 @@ const MainContextProvider = ({children}) => {
   const [submittedData, setSubmittedData] = useState([]);
   const [inputTime, setInputTime] = useState('00:00:00');
   const [startTest, setStartTest] = useState(false);
-  const [totalTimeTaken, setTotalTimeTaken] = useState(0);
+  const [totalTimeTaken, setTotalTimeTaken] = useState('');
+  const [startTime, setStartTime] = useState(null);
+
+  console.log(totalTimeTaken);
 
   const value = { 
     subjects,
@@ -30,7 +33,9 @@ const MainContextProvider = ({children}) => {
     startTest,
     setStartTest,
     totalTimeTaken,
-    setTotalTimeTaken  
+    setTotalTimeTaken,
+    startTime,
+    setStartTime
   }
 
   return (

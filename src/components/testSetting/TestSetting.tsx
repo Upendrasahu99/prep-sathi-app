@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import { MainContext } from '../../contexts/MainContextProvider';
 
 const TestSetting = () => {
-  const {setInputTime, setStartTest} = useContext(MainContext);
+  const {setInputTime, setStartTest, setStartTime} = useContext(MainContext);
 
   const hours = [0, 1, 2, 3];
   const minutes = [];
@@ -17,6 +17,7 @@ const TestSetting = () => {
   }
 
   const handleStartTest = () => {
+    setStartTime(Date.now());
     setInputTime(`${inputHour}:${inputMinute}:${inputSecond}`)
     setStartTest(true)
   }

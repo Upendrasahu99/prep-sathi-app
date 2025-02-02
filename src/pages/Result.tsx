@@ -2,7 +2,7 @@ import React, {useContext} from 'react'
 import{MainContext} from '../contexts/MainContextProvider'
 
 const Result = () => {
-  const {submittedData} = useContext(MainContext);
+  const {submittedData, totalTimeTaken} = useContext(MainContext);
   let totalWrongAnswers = 0;
   let totalCorrectAnswers = 0;
   let totalUnselectedAnswers = 0;
@@ -42,6 +42,12 @@ const Result = () => {
           <div className="stat-title">Unselected</div>
           <div className="stat-value">{totalUnselectedAnswers}</div>
           <div className="stat-desc badge badge-warning">Unselected</div>
+        </div>
+      </div>
+      <div className="stats shadow col-span-2 sm:col-span-4">
+        <div className="stat place-items-center">
+          <div className="stat-title">Time Taken</div>
+          <div className="stat-value">{totalTimeTaken}</div>
         </div>
       </div>
     </div>
