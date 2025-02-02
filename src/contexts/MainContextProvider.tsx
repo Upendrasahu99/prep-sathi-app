@@ -16,8 +16,6 @@ const MainContextProvider = ({children}) => {
   const [totalTimeTaken, setTotalTimeTaken] = useState('');
   const [startTime, setStartTime] = useState(null);
 
-  console.log(totalTimeTaken);
-
   const value = { 
     subjects,
     topics,

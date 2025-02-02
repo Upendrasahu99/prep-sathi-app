@@ -1,8 +1,15 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { MainContext } from '../../contexts/MainContextProvider';
-
+import { useNavigate } from 'react-router-dom';
 const TestSetting = () => {
-  const {setInputTime, setStartTest, setStartTime} = useContext(MainContext);
+  const {setInputTime, setStartTest, setStartTime, subject} = useContext(MainContext);
+  const navigate = useNavigate();
+  
+  useEffect(() => {
+    if(subject === ''){
+      navigate('/subjects')
+    }  
+  },[])
 
   const hours = [0, 1, 2, 3];
   const minutes = [];

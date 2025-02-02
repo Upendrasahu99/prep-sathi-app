@@ -1,8 +1,13 @@
 import React, {useContext} from 'react'
 import{MainContext} from '../contexts/MainContextProvider'
-
+import { useNavigate } from 'react-router-dom';
 const Result = () => {
-  const {submittedData, totalTimeTaken} = useContext(MainContext);
+  const {submittedData, totalTimeTaken, subject} = useContext(MainContext);
+
+  const navigate = useNavigate();
+  if(subject === ''){
+    navigate('/subjects');
+  }
   let totalWrongAnswers = 0;
   let totalCorrectAnswers = 0;
   let totalUnselectedAnswers = 0;

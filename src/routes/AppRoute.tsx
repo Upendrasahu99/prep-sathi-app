@@ -10,8 +10,10 @@ import MainLayout from '../layouts/MainLayout';
 import NotFound from '../pages/NotFound';
 import SingleQuestionTest from '../pages/SingleQuestionTest';
 import AllQuestionTest from '../pages/AllQuestionTest';
+import MainContextProvider,{MainContext} from '../contexts/MainContextProvider';
+import { useContext } from 'react';
 
-
+;
 const route = createBrowserRouter([
   {
     path: '/',
@@ -29,10 +31,6 @@ const route = createBrowserRouter([
         path: 'subjects/:subjectName',
         element: <SubjectTopics/>,
       },
-      // {
-      //   path: 'topic/:subjectName/:topicName',
-      //   element: <Topics/>,
-      // },
       {
         path: 'select-mode/:subjectName/:topicName',
         element: <SelectMode/>
@@ -59,7 +57,9 @@ const route = createBrowserRouter([
 
 const AppRoute = () => {
   return (
-    <RouterProvider router={route}/>
+    <MainContextProvider>
+      <RouterProvider router={route}/>
+    </MainContextProvider>
   )
 }
 

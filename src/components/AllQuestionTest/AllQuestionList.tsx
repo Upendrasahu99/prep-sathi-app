@@ -5,8 +5,9 @@ import { useNavigate } from 'react-router-dom';
 
 const AllQuestionList = () => {
   const {setSubmittedData, topic, subject, setStartTest, startTime, setTotalTimeTaken} = useContext(MainContext);
+
+
   const questionData = logicalReasoning;
-  const navigate = useNavigate();
 
   const onOptionClick = (e, index) => {
     questionData[index].selectedOption = e.target.value;

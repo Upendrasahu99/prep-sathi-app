@@ -1,10 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { MainContext } from '../contexts/MainContextProvider'
+import { useNavigate } from 'react-router-dom'
 
 const SubjectTopics = () => {
   const {topics, subject, setTopic} = useContext(MainContext);
+  const navigate = useNavigate();
+  useEffect(() =>{
+    if(subject === ''){
+      navigate('/subjects');
+    }
+  },[])
+  
   return (
     <ul className="menu menu-md bg-base-200 rounded-box w-full mx-auto">
     {
