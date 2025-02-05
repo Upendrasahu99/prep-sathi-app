@@ -9,7 +9,7 @@ const Subjects = () => {
     <ul className="menu menu-md bg-base-200 rounded-box w-full mx-auto">
       {
         subjects.map((data)=>
-            <li key={data.id}><Link to={`/subjects/${data.subject}`} onClick={() =>{setSubjectId(data.id); setSubject(data.subject) }}>{data.subject}</Link></li>
+            <li key={data.$id}><Link to={`/subjects/${data.subject}`} onClick={() =>{setSubjectId(data.id); setSubject(data.subject) }}>{data.subject}</Link></li>
         )
       }
     </ul>
