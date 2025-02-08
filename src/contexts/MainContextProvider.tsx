@@ -1,21 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react'
 import {subjectArr} from '../data//subjectData'
 import { topicArr } from '../data/topicData';
-
-// App write data calll
-
-import {databases} from '../utils/appwrite/config.js'
-
-const getSubjects = async () => {
-  const subjects = await databases.listDocuments(
-    import.meta.env.VITE_DATABASE_ID,
-    import.meta.env.VITE_COLLECTION_ID_SUBJECT
-  )
-  console.log(subjects.documents);
-  return subjects.documents;
-}
-
-
+import { getSubjects } from '../services/getData';
 
 const MainContext = createContext();
 
