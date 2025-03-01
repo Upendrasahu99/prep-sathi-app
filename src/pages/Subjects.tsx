@@ -12,7 +12,7 @@ const Subjects = () => {
 
   const getQuestions = async (topicId) => {
     try {
-      const response = await fetch(`http://localhost:5500/api/v1/questions/topic/${topicId}?size=${questionCount}`);
+      const response = await fetch(`https://prep-sathi-backend.vercel.app/api/v1/questions/topic/${topicId}?size=${questionCount}`);
       if (!response.ok) {
         throw new Error('Failed to fetch questions');
       }
@@ -40,7 +40,7 @@ const Subjects = () => {
   useEffect(() => {
     const fetchSubjects = async () => {
       try {
-        const response = await fetch('http://localhost:5500/api/v1/subjects');
+        const response = await fetch('https://prep-sathi-backend.vercel.app/api/v1/subjects');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
