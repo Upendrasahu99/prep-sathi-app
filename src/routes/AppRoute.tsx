@@ -1,17 +1,11 @@
 
 import {createBrowserRouter, RouterProvider, Navigate} from 'react-router-dom';
-import Subjects from '../pages/Subjects';
-import SubjectTopics from '../pages/SubjectTopics';
-import SelectMode from '../pages/SelectMode';
-import Topics from '../pages/Topics';
-import Test from '../pages/Test';
-import Result from '../pages/Result';
+import Subjects from '../pages/Subjects.js';
+import Test from '../pages/Test.js';
+import Result from '../pages/Result.js';
 import MainLayout from '../layouts/MainLayout';
 import NotFound from '../pages/NotFound';
-import SingleQuestionTest from '../pages/SingleQuestionTest';
-import AllQuestionTest from '../pages/AllQuestionTest';
-import MainContextProvider,{MainContext} from '../contexts/MainContextProvider';
-import { useContext } from 'react';
+
 
 ;
 const route = createBrowserRouter([
@@ -32,10 +26,6 @@ const route = createBrowserRouter([
         element: <Test/>
       },
       {
-        path: 'test-all-questions',
-        element: <AllQuestionTest/>
-      },
-      {
         path: 'result',
         element: <Result/>
       }
@@ -49,9 +39,7 @@ const route = createBrowserRouter([
 
 const AppRoute = () => {
   return (
-    <MainContextProvider>
       <RouterProvider router={route}/>
-    </MainContextProvider>
   )
 }
 

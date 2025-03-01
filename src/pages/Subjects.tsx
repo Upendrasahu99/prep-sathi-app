@@ -1,12 +1,11 @@
 // Subjects.jsx
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Subjects = () => {
   const [subjects, setSubjects] = useState([]);
   const [topic, setTopic] = useState('');
   const [questionCount, setQuestionCount] = useState(0);
-  const [questions, setQuestions] = useState([]);
   const navigate = useNavigate();
   const questionCountOptions = Array.from({ length: 20 }, (_, i) => i + 1);
 
@@ -17,7 +16,6 @@ const Subjects = () => {
         throw new Error('Failed to fetch questions');
       }
       const data = await response.json();
-      setQuestions(data.data);
       return data.data;
     } catch (error) {
       console.error('Error fetching questions:', error);
