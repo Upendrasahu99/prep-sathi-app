@@ -28,23 +28,15 @@ const route = createBrowserRouter([
         element: <Subjects/>
       },
       {
-        path: 'subjects/:subjectName',
-        element: <SubjectTopics/>,
+        path: 'test',
+        element: <Test/>
       },
       {
-        path: 'select-mode/:subjectName/:topicName',
-        element: <SelectMode/>
-      },
-      {
-        path: 'test-single-question/:subjectName/:topicName',
-        element: <SingleQuestionTest/>
-      },
-      {
-        path: 'test-all-questions/:subjectName/:topicName',
+        path: 'test-all-questions',
         element: <AllQuestionTest/>
       },
       {
-        path: 'result/:subjectName/:topicName',
+        path: 'result',
         element: <Result/>
       }
     ]

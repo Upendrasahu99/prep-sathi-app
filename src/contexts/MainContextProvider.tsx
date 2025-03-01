@@ -1,14 +1,14 @@
 import React, { createContext, useEffect, useState } from 'react'
 import {subjectArr} from '../data//subjectData'
 import { topicArr } from '../data/topicData';
-import { getSubjects } from '../services/getData';
 
 const MainContext = createContext();
 
 const MainContextProvider = ({children}) => {
+  
   const [subjects, setSubjects] = useState([]);
   const [subject, setSubject] = useState('');
-  const [subjectId, setSubjectId] = useState(0);
+  const [subjectId, setSubjectId] = useState('');
   const [topic, setTopic] = useState('');
   const topics = topicArr.filter((data) => data.subjectId === subjectId);
   const [submittedData, setSubmittedData] = useState([]);
@@ -16,12 +16,18 @@ const MainContextProvider = ({children}) => {
   const [startTest, setStartTest] = useState(false);
   const [totalTimeTaken, setTotalTimeTaken] = useState('');
   const [startTime, setStartTime] = useState(null);
-  useEffect(() => {
-    getSubjects().then((data) => {
-      setSubjects(data);
-    })
-  }, [])
+  
+  console.log(topic);
 
+  if(topic !== ''){
+    // const getQuestions =  async()=>{
+    //   const response = await fetch(`http://localhost:5500/api/v1/questions/topic/${topic}?size=5`);
+    //   const data = await response.json();
+    //   console.log(data.data);
+    // }
+    // getQuestions();
+  }
+  
   const value = { 
     subjects,
     topics,

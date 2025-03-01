@@ -2,14 +2,9 @@ import React, { useState, useContext, useEffect } from 'react'
 import { MainContext } from '../../contexts/MainContextProvider';
 import { useNavigate } from 'react-router-dom';
 const TestSetting = () => {
-  const {setInputTime, setStartTest, setStartTime, subject} = useContext(MainContext);
   const navigate = useNavigate();
-  
-  useEffect(() => {
-    if(subject === ''){
-      navigate('/subjects')
-    }  
-  },[])
+  const {setInputTime, setStartTest, setStartTime} = useContext(MainContext);
+
 
   const hours = [0, 1, 2, 3];
   const minutes = [];
@@ -17,7 +12,12 @@ const TestSetting = () => {
   const [inputHour, setInputHour] = useState(0);
   const [inputMinute, setInputMinute] = useState(0);
   const [inputSecond, setInputSecond] = useState(0);
+  const questonCount = [];
   
+  for(let i = 1; i < 21; i++){
+    questonCount.push(i);
+  }
+
   for(let i = 0; i < 60; i++){
     minutes.push(i);
     seconds.push(i);
@@ -26,11 +26,20 @@ const TestSetting = () => {
   const handleStartTest = () => {
     setStartTime(Date.now());
     setInputTime(`${inputHour}:${inputMinute}:${inputSecond}`)
-    setStartTest(true)
+    setStartTest(true);
   }
   return (
-    <div className='flex flex-col items-center gap-5'>
-      
+    <form className='flex flex-col items-center gap-5'>
+      <label className="form-control w-full max-w-xs">
+        <div className="label">
+          <span className="label-text">Select Mode</span>
+        </div>
+        <select className="select select-bordered select-md" defaultValue={'full-test'}>
+            <option value={'single-question'} disabled>Single Question</option> 
+            <option value={'full-test'} >Full Test</option>
+        </select>
+      </label>
+
       <label className="form-control w-full max-w-xs">
         <div className="label">
           <span className="label-text">Select duration</span>
@@ -54,12 +63,18 @@ const TestSetting = () => {
         <div className="label">
           <span className="label-text">Question Count</span>
         </div>
-        <input type="text" placeholder="Type here" className="input input-md input-bordered w-full" />
+        <select className="select select-bordered select-md" defaultValue={0} onChange={(e) => setInputHour(`${e.target.value}`)}>
+            {questonCount.map((data, index) => <option key={index} value={data}>{data}</option>)}
+        </select>
       </label>
+      
+      <div className='grid grid-cols-2 gap-5'>
+        <button className="btn" onClick={handleStartTest}>Start Test</button>
+        <a href="#" className="btn">Close</a>
+      </div>
 
-      <button className="btn btn-wide" onClick={handleStartTest}>Start Test</button>
-    </div>
+    </form>
   )
 }
 
-export default TestSetting
+export default TestSetting;
