@@ -101,6 +101,12 @@ const Result: React.FC = () => {
         </div>
       )}
 
+      <div className="flex justify-center mt-6">
+        <button className="btn btn-success" onClick={handleHomeClick}>
+          Home
+        </button>
+      </div>
+
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-7 p-0 sm:p-7 mb-5">
         {submittedData.map((question: any, qIndex: number) => {
           const isUnselected = question.selectedOption === undefined;
@@ -114,11 +120,11 @@ const Result: React.FC = () => {
               }`}
             >
               <div className="card-body">
-                <div className="mt-2 p-2 bg-base-200 rounded-lg shadow-sm flex items-center gap-2">
+                <div className={`mt-2 p-2 bg-base-200 rounded-lg shadow-sm flex items-center gap-2 ${testFormat === 'full' && 'hidden'}`}>
                   <svg className="w-5 h-5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <div className="badge badge-neutral rounded-lg text-xl">
+                  <div className="badge badge-neutral rounded-lg text-lg">
                   <span className="font-semibold text-gray-900 dark:text-gray-100">Time Taken: </span>
                   <span className="ms-1 font-extrabold"> {formatTime(question.timeTaken)}</span>
                 </div>
