@@ -138,9 +138,6 @@ const Test = () => {
             <span style={{ '--value': hrs } as React.CSSProperties}></span>:
             <span style={{ '--value': mins } as React.CSSProperties}></span>:
             <span style={{ '--value': secs } as React.CSSProperties}></span>
-            <span style={{ '--value': hrs } as React.CSSProperties}></span>:
-            <span style={{ '--value': mins } as React.CSSProperties}></span>:
-            <span style={{ '--value': secs } as React.CSSProperties}></span>
           </span>
         </div>
       )}
