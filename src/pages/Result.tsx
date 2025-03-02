@@ -101,7 +101,7 @@ const Result: React.FC = () => {
         </div>
       )}
 
-      <div className="flex justify-center mt-6">
+      <div className="flex justify-center my-6">
         <button className="btn btn-success" onClick={handleHomeClick}>
           Home
         </button>
