@@ -1,7 +1,7 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
-const Result = () => {
+const Result: React.FC = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const {
@@ -9,76 +9,98 @@ const Result = () => {
     totalCorrectAnswers = 0,
     totalWrongAnswers = 0,
     totalUnselectedAnswers = 0,
-    totalTime = 0, // Original time in seconds
-    timeTaken = 0, // Time taken in seconds
+    totalTime = 0,
+    timeTaken = 0,
+    timeTakenPerQuestion = [], // New field for per-question stats
   } = location.state || {};
 
   const handleHomeClick = () => {
     navigate('/subjects');
   };
 
-  // Format time from seconds to HH:MM:SS
-  const formatTime = (totalSeconds) => {
+  const formatTime = (totalSeconds: number) => {
     const hrs = Math.floor(totalSeconds / 3600);
     const mins = Math.floor((totalSeconds % 3600) / 60);
     const secs = totalSeconds % 60;
     return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
-  const timeLeft = totalTime - timeTaken; // Calculate remaining time
+  const timeLeft = totalTime - timeTaken;
+  const avgTimeTaken = timeTakenPerQuestion.length > 0 
+    ? timeTakenPerQuestion.reduce((sum, time) => sum + time, 0) / timeTakenPerQuestion.length 
+    : 0;
+  const maxTimeTaken = timeTakenPerQuestion.length > 0 ? Math.max(...timeTakenPerQuestion) : 0;
+  const minTimeTaken = timeTakenPerQuestion.length > 0 ? Math.min(...timeTakenPerQuestion) : 0;
 
   return (
     <div className="container mx-auto p-4">
-      <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-7 p-0 sm:p-7 mb-5">
+      <div className="w-full grid grid-cols-2 sm:grid-cols-4  sm:gap-7 p-0 sm:p-7 mb-5">
         <div className="stats shadow">
           <div className="stat place-items-center">
             <div className="stat-title">Total</div>
-            <div className="stat-value text-gray-900 dark:text-gray-100">{submittedData.length}</div>
+            <div className="stat-value text-gray-900 dark:text-gray-100 text-lg sm:text-5xl">{submittedData.length}</div>
           </div>
         </div>
         <div className="stats shadow">
           <div className="stat place-items-center">
             <div className="stat-title">Correct</div>
-            <div className="stat-value text-gray-900 dark:text-gray-100">{totalCorrectAnswers}</div>
+            <div className="stat-value text-gray-900 dark:text-gray-100 text-lg sm:text-5xl">{totalCorrectAnswers}</div>
             <div className="stat-desc badge badge-success">correct</div>
           </div>
         </div>
         <div className="stats shadow">
           <div className="stat place-items-center">
             <div className="stat-title">Wrong</div>
-            <div className="stat-value text-gray-900 dark:text-gray-100">{totalWrongAnswers}</div>
+            <div className="stat-value text-gray-900 dark:text-gray-100 text-lg sm:text-5xl">{totalWrongAnswers}</div>
             <div className="stat-desc badge badge-error">Wrong</div>
           </div>
         </div>
         <div className="stats shadow">
           <div className="stat place-items-center">
             <div className="stat-title">Unselected</div>
-            <div className="stat-value text-gray-900 dark:text-gray-100">{totalUnselectedAnswers}</div>
+            <div className="stat-value text-gray-900 dark:text-gray-100 text-lg sm:text-5xl">{totalUnselectedAnswers}</div>
             <div className="stat-desc badge badge-warning">Unselected</div>
           </div>
         </div>
       </div>
 
-      {/* Timer Stats */}
       {totalTime > 0 && (
-        <div className="w-full grid grid-cols-2 gap-7 p-0 sm:p-7 mb-5">
+        <div className="w-full grid grid-cols-2 md:grid-cols-2 gap-7 p-0 sm:p-7 mb-5">
           <div className="stats shadow">
             <div className="stat place-items-center">
               <div className="stat-title">Time Taken</div>
-              <div className="stat-value text-gray-900 dark:text-gray-100">{formatTime(timeTaken)}</div>
+              <div className="stat-value text-gray-900 dark:text-gray-100 text-lg sm:text-5xl">{formatTime(timeTaken)}</div>
             </div>
           </div>
           <div className="stats shadow">
             <div className="stat place-items-center">
               <div className="stat-title">Time Left</div>
-              <div className="stat-value text-gray-900 dark:text-gray-100">{formatTime(timeLeft)}</div>
+              <div className="stat-value text-gray-900 dark:text-gray-100 text-lg sm:text-5xl">{formatTime(timeLeft)}</div>
+            </div>
+          </div>
+          <div className="stats shadow">
+            <div className="stat place-items-center">
+              <div className="stat-title">Average Time</div>
+              <div className="stat-value text-gray-900 dark:text-gray-100 text-lg sm:text-5xl">{formatTime(avgTimeTaken)}</div>
+            </div>
+          </div>
+          <div className="stats shadow">
+            <div className="stat place-items-center">
+              <div className="stat-title">Max Time</div>
+              <div className="stat-value text-gray-900 dark:text-gray-100 text-lg sm:text-5xl">{formatTime(maxTimeTaken)}</div>
+            </div>
+          </div>
+          <div className="stats shadow">
+            <div className="stat place-items-center">
+              <div className="stat-title">Min Time</div>
+              <div className="stat-value text-gray-900 dark:text-gray-100 text-lg sm:text-5xl">{formatTime(minTimeTaken)}</div>
             </div>
           </div>
         </div>
       )}
 
       <div className="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-7 p-0 sm:p-7 mb-5">
-        {submittedData.map((question, qIndex) => {
+        {submittedData.map((question: any, qIndex: number) => {
           const isUnselected = question.selectedOption === undefined;
           const isCorrectAnswer = question.correctAnswer.correctOptionId === question.selectedOption;
 
@@ -98,8 +120,12 @@ const Result = () => {
                   <div className="badge badge-neutral">{qIndex + 1}.</div>{' '}
                   <span className="text-gray-900 dark:text-gray-100">{question.questionEnglish}</span>
                 </div>
+                <div className="mt-2">
+                  <span className="font-semibold text-gray-900 dark:text-gray-100">Time Taken: </span>
+                  <span className="text-gray-600 dark:text-gray-400">{formatTime(question.timeTaken)}</span>
+                </div>
                 <div className="flex flex-col gap-5 mt-5">
-                  {question.questionOptionsHindi.map((option, index) => {
+                  {question.questionOptionsHindi.map((option: any, index: number) => {
                     const isCorrectOption = option.id === question.correctAnswer.correctOptionId;
                     const isSelected = question.selectedOption === option.id;
                     const wrongSelected = isSelected && !isCorrectAnswer;
