@@ -14,7 +14,7 @@ const Result = () => {
   } = location.state || {};
 
   const handleHomeClick = () => {
-    navigate('/subjects');
+    navigate('/');
   };
 
   // Format time from seconds to HH:MM:SS

@@ -1,5 +1,5 @@
 
-import { createBrowserRouter, RouterProvider, Navigate } from 'react-router-dom';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Subjects from '../pages/Subjects';
 import Test from '../pages/Test';
 import Result from '../pages/Result';
@@ -9,15 +9,11 @@ import NotFound from '../pages/NotFound';
 const route = createBrowserRouter([
   {
     path: '/',
-    element: <Navigate to='/subjects' replace />, // Redirect root to subjects
-  },
-  {
-    path: '/',
     element: <MainLayout />,
     errorElement: <NotFound />, // Catch errors simply
     children: [
       {
-        path: 'subjects',
+        index: true,
         element: <Subjects />
       },
       {

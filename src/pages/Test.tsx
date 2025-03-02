@@ -21,7 +21,7 @@ const Test = () => {
       setIsInitialLoad(false);
       if (!questions.length) {
         localStorage.removeItem('testAnswers');
-        navigate('/subjects', { replace: true });
+        navigate('/', { replace: true });
       }
     }
   }, [questions, navigate, isInitialLoad]);
@@ -41,7 +41,7 @@ const Test = () => {
     const handlePopState = (_e) => {
       if (window.confirm('Are you sure you want to leave? Your test progress will be lost.')) {
         localStorage.removeItem('testAnswers');
-        navigate('/subjects', { replace: true });
+        navigate('/', { replace: true });
       } else {
         window.history.pushState(null, null, window.location.pathname);
       }
