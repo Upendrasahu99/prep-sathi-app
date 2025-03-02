@@ -5,7 +5,6 @@ import Result from '../pages/Result';
 import OneByOneTest from '../pages/OneByOneTest';
 import MainLayout from '../layouts/MainLayout';
 import NotFound from '../pages/NotFound';
-import MainContextProvider from '../contexts/MainContextProvider';
 
 const route = createBrowserRouter([
   {
@@ -43,9 +42,7 @@ const route = createBrowserRouter([
 
 const AppRoute = () => {
   return (
-    <MainContextProvider>
       <RouterProvider router={route} />
-    </MainContextProvider>
   );
 };
 

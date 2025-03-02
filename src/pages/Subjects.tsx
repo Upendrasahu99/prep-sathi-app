@@ -9,7 +9,7 @@ const Subjects: React.FC = () => {
   const [minutes, setMinutes] = useState(0);
   const [seconds, setSeconds] = useState(0);
   const [testType, setTestType] = useState('full');
-  const [questionHours] = useState(0); // Fixed to 0 for One by One
+  // const [questionHours] = useState(0); // Fixed to 0 for One by One
   const [questionMinutes, setQuestionMinutes] = useState(0);
   const [questionSeconds, setQuestionSeconds] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -73,6 +73,7 @@ const Subjects: React.FC = () => {
           timer: testType === 'full' ? totalTimeInSeconds : 0,
           testType,
           questionTimer: testType === 'oneByOne' ? questionTimeInSeconds : 0,
+          testFormat: testType
         },
       });
     } else {

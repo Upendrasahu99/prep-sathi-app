@@ -12,7 +12,9 @@ const Result: React.FC = () => {
     totalTime = 0,
     timeTaken = 0,
     timeTakenPerQuestion = [], // New field for per-question stats
+    testFormat
   } = location.state || {};
+
 
   const handleHomeClick = () => {
     navigate('/subjects');
@@ -78,19 +80,19 @@ const Result: React.FC = () => {
               <div className="stat-value text-gray-900 dark:text-gray-100 text-lg sm:text-5xl">{formatTime(timeLeft)}</div>
             </div>
           </div>
-          <div className="stats shadow">
+          <div className={`stats shadow ${testFormat === 'full' && 'hidden'}`}>
             <div className="stat place-items-center">
               <div className="stat-title">Average Time</div>
               <div className="stat-value text-gray-900 dark:text-gray-100 text-lg sm:text-5xl">{formatTime(avgTimeTaken)}</div>
             </div>
           </div>
-          <div className="stats shadow">
+          <div className={`stats shadow ${testFormat === 'full' && 'hidden'}`}>
             <div className="stat place-items-center">
               <div className="stat-title">Max Time</div>
               <div className="stat-value text-gray-900 dark:text-gray-100 text-lg sm:text-5xl">{formatTime(maxTimeTaken)}</div>
             </div>
           </div>
-          <div className="stats shadow">
+          <div className={`stats shadow ${testFormat === 'full' && 'hidden'}`}>
             <div className="stat place-items-center">
               <div className="stat-title">Min Time</div>
               <div className="stat-value text-gray-900 dark:text-gray-100 text-lg sm:text-5xl">{formatTime(minTimeTaken)}</div>

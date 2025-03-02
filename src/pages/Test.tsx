@@ -4,13 +4,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const Test = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { questions, timer } = location.state || { questions: [], timer: 0 };
+  const { questions, timer, testFormat} = location.state || { questions: [], timer: 0 };
   const [userAnswers, setUserAnswers] = useState(() => {
     return JSON.parse(localStorage.getItem('testAnswers')) || {};
   });
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [remainingTime, setRemainingTime] = useState(timer);
-
+  
   useEffect(() => {
     localStorage.setItem('testAnswers', JSON.stringify(userAnswers));
   }, [userAnswers]);
@@ -36,7 +36,7 @@ const Test = () => {
 
   useEffect(() => {
     window.history.pushState(null, null, window.location.pathname);
-    const handlePopState = (e) => {
+    const handlePopState = (_e) => {
       if (window.confirm('Are you sure you want to leave? Your test progress will be lost.')) {
         localStorage.removeItem('testAnswers');
         navigate('/subjects', { replace: true });
@@ -110,6 +110,7 @@ const Test = () => {
       totalUnselectedAnswers,
       totalTime: timer, // Original time set
       timeTaken, // Time used until submission
+      testFormat
     };
 
     localStorage.removeItem('testAnswers');
@@ -132,11 +133,11 @@ const Test = () => {
   return (
     <div className="container mx-auto p-4 relative">
       {timer > 0 && (
-        <div className="fixed top-0 left-0 right-0 bg-base-200 p-2 shadow-md z-50 text-center">
+        <div className="fixed top-0 left-0 right-0 h-20 bg-base-200 p-2 shadow-md z-50 text-center">
           <span className="countdown font-mono text-2xl text-gray-900 dark:text-gray-100">
-            <span style={{ '--value': hrs }}></span>:
-            <span style={{ '--value': mins }}></span>:
-            <span style={{ '--value': secs }}></span>
+            <span style={{ '--value': hrs } as React.CSSProperties}></span>:
+            <span style={{ '--value': mins } as React.CSSProperties}></span>:
+            <span style={{ '--value': secs } as React.CSSProperties}></span>
           </span>
         </div>
       )}

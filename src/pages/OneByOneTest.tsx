@@ -45,7 +45,7 @@ const OneByOneTest: React.FC = () => {
         localStorage.removeItem('testAnswers');
         navigate('/subjects', { replace: true });
       } else {
-        window.history.pushState(null, null, window.location.pathname);
+        window.history.pushState(null, window.location.pathname);
       }
     };
     window.addEventListener('popstate', handlePopState);
