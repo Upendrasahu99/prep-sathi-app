@@ -18,7 +18,7 @@ const Subjects = () => {
   const hourOptions = Array.from({ length: 24 }, (_, i) => i);
   const minuteSecondOptions = Array.from({ length: 60 }, (_, i) => i);
 
-  const API_URL = 'https://prep-sathi-backend.vercel.app/';
+  const API_URL = 'https://prep-sathi-backend.vercel.app';
   const SUBJECTS_STORAGE_KEY = 'cachedSubjects';
   const CACHE_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
