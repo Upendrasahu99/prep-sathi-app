@@ -1,5 +1,5 @@
-// Test.jsx
-import React, { useState } from 'react';
+
+import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const Test = () => {
@@ -37,7 +37,8 @@ const Test = () => {
 
   useEffect(() => {
     window.history.pushState(null, null, window.location.pathname);
-    const handlePopState = (e) => {
+
+    const handlePopState = (_e) => {
       if (window.confirm('Are you sure you want to leave? Your test progress will be lost.')) {
         localStorage.removeItem('testAnswers');
         navigate('/subjects', { replace: true });
@@ -135,9 +136,9 @@ const Test = () => {
       {timer > 0 && (
         <div className="fixed top-0 left-0 right-0 bg-base-200 p-2 shadow-md z-50 text-center">
           <span className="countdown font-mono text-2xl text-gray-900 dark:text-gray-100">
-            <span style={{ '--value': hrs }}></span>:
-            <span style={{ '--value': mins }}></span>:
-            <span style={{ '--value': secs }}></span>
+            <span style={{ '--value': hrs } as React.CSSProperties}></span>:
+            <span style={{ '--value': mins } as React.CSSProperties}></span>:
+            <span style={{ '--value': secs } as React.CSSProperties}></span>
           </span>
         </div>
       )}

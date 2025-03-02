@@ -1,12 +1,18 @@
-// Subjects.jsx
-import React, { useEffect, useState } from 'react';
+
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Subjects = () => {
   const [subjects, setSubjects] = useState([]);
   const [topic, setTopic] = useState('');
   const [questionCount, setQuestionCount] = useState(0);
-  const [questions, setQuestions] = useState([]);
+
+  const [hours, setHours] = useState(0);
+  const [minutes, setMinutes] = useState(0);
+  const [seconds, setSeconds] = useState(0);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
   const questionCountOptions = Array.from({ length: 20 }, (_, i) => i + 1);
   const hourOptions = Array.from({ length: 24 }, (_, i) => i);
@@ -18,7 +24,8 @@ const Subjects = () => {
 
   const getQuestions = async (topicId) => {
     try {
-      const response = await fetch(`http://localhost:5500/api/v1/questions/topic/${topicId}?size=${questionCount}`);
+
+      const response = await fetch(`${API_URL}/api/v1/questions/topic/${topicId}?size=${questionCount}`);
       if (!response.ok) {
         throw new Error('Failed to fetch questions');
       }
@@ -62,8 +69,21 @@ const Subjects = () => {
 
   useEffect(() => {
     const fetchSubjects = async () => {
+      // Check localStorage for cached data
+      const cachedSubjects = localStorage.getItem(SUBJECTS_STORAGE_KEY);
+      let parsedCache = cachedSubjects ? JSON.parse(cachedSubjects) : null;
+
+      // Use cached data if it exists and isn’t expired
+      if (parsedCache && Date.now() - parsedCache.timestamp < CACHE_EXPIRY_MS) {
+        setSubjects(parsedCache.data);
+        setLoading(false); // Show cached data immediately
+      } else {
+        setLoading(true); // No valid cache, keep loading true
+      }
+
+      // Fetch fresh data from API
       try {
-        const response = await fetch('http://localhost:5500/api/v1/subjects');
+        const response = await fetch(`${API_URL}/api/v1/subjects`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
