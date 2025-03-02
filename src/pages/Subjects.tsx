@@ -1,17 +1,24 @@
 // Subjects.jsx
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Subjects = () => {
   const [subjects, setSubjects] = useState([]);
   const [topic, setTopic] = useState('');
   const [questionCount, setQuestionCount] = useState(0);
+  const [questions, setQuestions] = useState([]);
   const navigate = useNavigate();
   const questionCountOptions = Array.from({ length: 20 }, (_, i) => i + 1);
+  const hourOptions = Array.from({ length: 24 }, (_, i) => i);
+  const minuteSecondOptions = Array.from({ length: 60 }, (_, i) => i);
+
+  const API_URL = 'http://localhost:5500';
+  const SUBJECTS_STORAGE_KEY = 'cachedSubjects';
+  const CACHE_EXPIRY_MS = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
 
   const getQuestions = async (topicId) => {
     try {
-      const response = await fetch(`https://prep-sathi-backend.vercel.app/api/v1/questions/topic/${topicId}?size=${questionCount}`);
+      const response = await fetch(`http://localhost:5500/api/v1/questions/topic/${topicId}?size=${questionCount}`);
       if (!response.ok) {
         throw new Error('Failed to fetch questions');
       }
@@ -19,37 +26,74 @@ const Subjects = () => {
       return data.data;
     } catch (error) {
       console.error('Error fetching questions:', error);
+      setError('Failed to load questions. Please try again.');
       return null;
     }
   };
 
   const handleStartTest = async (e) => {
     e.preventDefault();
-    if (topic && questionCount > 0) {
-      const fetchedQuestions = await getQuestions(topic);
-      if (fetchedQuestions) {
-        navigate('/test', { state: { questions: fetchedQuestions } });
-      }
+    if (!topic || questionCount <= 0) {
+      setError('Please select a topic and question count.');
+      return;
+    }
+
+    const totalTimeInSeconds = hours * 3600 + minutes * 60 + seconds;
+    if (totalTimeInSeconds <= 0) {
+      setError('Please set a valid timer (at least 1 second).');
+      return;
+    }
+
+    setLoading(true);
+    const fetchedQuestions = await getQuestions(topic);
+    setLoading(false);
+
+    if (fetchedQuestions) {
+      navigate('/test', {
+        state: {
+          questions: fetchedQuestions,
+          timer: totalTimeInSeconds,
+        },
+      });
     } else {
-      console.log('Please select a topic and question count');
+      setError('Could not start test. Please try again.');
     }
   };
 
   useEffect(() => {
     const fetchSubjects = async () => {
       try {
-        const response = await fetch('https://prep-sathi-backend.vercel.app/api/v1/subjects');
+        const response = await fetch('http://localhost:5500/api/v1/subjects');
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
         const data = await response.json();
         setSubjects(data.data);
+        // Cache the new data with a timestamp
+        localStorage.setItem(
+          SUBJECTS_STORAGE_KEY,
+          JSON.stringify({ data: data.data, timestamp: Date.now() })
+        );
       } catch (error) {
         console.error('Failed to fetch subjects:', error);
+        if (!parsedCache) {
+          setError('Failed to load subjects. Please refresh the page.');
+        }
+      } finally {
+        setLoading(false); // Done loading, whether from cache or API
       }
     };
+
     fetchSubjects();
-  }, []);
+  }, []); // Empty dependency array for mount-only fetch
+
+  if (loading) {
+    return <div className="text-center">Loading subjects...</div>;
+  }
+
+  if (error) {
+    return <div className="text-center text-error">{error}</div>;
+  }
 
   return (
     <div>
@@ -61,9 +105,14 @@ const Subjects = () => {
               <ul>
                 {subject.topics.map((topic) => (
                   <li key={topic._id}>
-                    <a href="#my_modal_8" onClick={() => setTopic(topic._id)}>
+                    <button
+                      onClick={() => {
+                        setTopic(topic._id);
+                        setIsModalOpen(true);
+                      }}
+                    >
                       {topic.name}
-                    </a>
+                    </button>
                   </li>
                 ))}
               </ul>
@@ -72,38 +121,88 @@ const Subjects = () => {
         ))}
       </ul>
 
-      <div className="modal" id="my_modal_8">
-        <div className="modal-box">
-          <form className="flex flex-col items-center gap-5">
-            <label className="form-control w-full max-w-xs">
-              <div className="label">
-                <span className="label-text">Question Count</span>
-              </div>
-              <select
-                className="select select-bordered select-md"
-                value={questionCount}
-                onChange={(e) => setQuestionCount(parseInt(e.target.value))}
-              >
-                <option value={0}>Select number of questions</option>
-                {questionCountOptions.map((count) => (
-                  <option key={count} value={count}>
-                    {count}
-                  </option>
-                ))}
-              </select>
-            </label>
+      {isModalOpen && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <form className="flex flex-col items-center gap-5">
+              {/* Question Count */}
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text">Question Count</span>
+                </div>
+                <select
+                  className="select select-bordered select-md"
+                  value={questionCount}
+                  onChange={(e) => setQuestionCount(parseInt(e.target.value))}
+                >
+                  <option value={0}>Select number of questions</option>
+                  {questionCountOptions.map((count) => (
+                    <option key={count} value={count}>
+                      {count}
+                    </option>
+                  ))}
+                </select>
+              </label>
 
-            <div className="grid grid-cols-2 gap-5">
-              <button className="btn" onClick={handleStartTest}>
-                Start Test
-              </button>
-              <a href="#" className="btn">
-                Close
-              </a>
-            </div>
-          </form>
+              {/* Timer Selection */}
+              <label className="form-control w-full max-w-xs">
+                <div className="label">
+                  <span className="label-text">Set Timer (HH:MM:SS)</span>
+                </div>
+                <div className="flex gap-2">
+                  <select
+                    className="select select-bordered select-md w-1/3"
+                    value={hours}
+                    onChange={(e) => setHours(parseInt(e.target.value))}
+                  >
+                    {hourOptions.map((h) => (
+                      <option key={h} value={h}>
+                        {h.toString().padStart(2, '0')}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    className="select select-bordered select-md w-1/3"
+                    value={minutes}
+                    onChange={(e) => setMinutes(parseInt(e.target.value))}
+                  >
+                    {minuteSecondOptions.map((m) => (
+                      <option key={m} value={m}>
+                        {m.toString().padStart(2, '0')}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    className="select select-bordered select-md w-1/3"
+                    value={seconds}
+                    onChange={(e) => setSeconds(parseInt(e.target.value))}
+                  >
+                    {minuteSecondOptions.map((s) => (
+                      <option key={s} value={s}>
+                        {s.toString().padStart(2, '0')}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </label>
+
+              {/* Buttons */}
+              <div className="grid grid-cols-2 gap-5">
+                <button
+                  className="btn btn-primary"
+                  onClick={handleStartTest}
+                  disabled={loading}
+                >
+                  {loading ? 'Starting...' : 'Start Test'}
+                </button>
+                <button className="btn" onClick={() => setIsModalOpen(false)}>
+                  Close
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };
