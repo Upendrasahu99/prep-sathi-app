@@ -67,7 +67,12 @@ const Subjects: React.FC = () => {
 
     setLoading(true);
     const fetchedQuestions = await getQuestions(topic);
+    const totalResponseQuestion = await parseInt(fetchedQuestions.length);
     setLoading(false);
+
+    if(totalResponseQuestion === 0){
+      navigate('/')
+    }
 
     if (fetchedQuestions) {
       navigate(testType === 'full' ? '/test' : '/test-one-by-one', {
@@ -130,7 +135,7 @@ const Subjects: React.FC = () => {
 
   return (
     <div>
-      <ul className="menu bg-base-200 w-full">
+      <ul className="menu md:menu-lg bg-base-200 w-full">
         {subjects.map((subject) => (
           <li key={subject._id}>
             <details>
