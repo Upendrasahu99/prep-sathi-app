@@ -5,7 +5,7 @@ const NotFound = () => {
   return (
     <div className='text-5xl flex flex-col'>
       Not Found
-      <button className="btn btn-primary mt-5 w-1/4 mx-auto" onClick={(e) => {navigate('/')}} >Home</button>
+      <button className="btn btn-primary mt-5 w-1/4 mx-auto" onClick={(_e) => {navigate('/')}} >Home</button>
     </div>
   )
 }
