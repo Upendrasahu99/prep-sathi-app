@@ -10,7 +10,6 @@ const Test = () => {
   });
   const [isInitialLoad, setIsInitialLoad] = useState(true);
   const [remainingTime, setRemainingTime] = useState(timer);
-  
   useEffect(() => {
     localStorage.setItem('testAnswers', JSON.stringify(userAnswers));
   }, [userAnswers]);
@@ -98,6 +97,7 @@ const Test = () => {
         })),
         selectedOption: userAnswers[q._id],
         correctAnswer: { correctOptionId: q.correctOption },
+        explanations: q.explanations
       };
     });
 
