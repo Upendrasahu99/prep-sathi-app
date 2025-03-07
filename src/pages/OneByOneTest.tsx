@@ -126,6 +126,7 @@ const OneByOneTest: React.FC = () => {
         selectedOption: userAnswers[q._id],
         correctAnswer: { correctOptionId: q.correctOption },
         timeTaken: allTimeTaken[index] || 0,
+        explanations: q.explanations
       };
     });
 
