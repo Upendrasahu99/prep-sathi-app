@@ -92,7 +92,7 @@ const Subjects: React.FC = () => {
   useEffect(() => {
     const fetchSubjects = async () => {
       const cachedSubjects = localStorage.getItem(SUBJECTS_STORAGE_KEY);
-      let parsedCache = cachedSubjects ? JSON.parse(cachedSubjects) : null;
+      const parsedCache = cachedSubjects ? JSON.parse(cachedSubjects) : null;
 
       if (parsedCache && Date.now() - parsedCache.timestamp < CACHE_EXPIRY_MS) {
         setSubjects(parsedCache.data);

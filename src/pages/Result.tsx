@@ -143,12 +143,12 @@ const Result: React.FC = () => {
                 </div>
                 <div>
                   <div className="badge badge-neutral">{qIndex + 1}.</div>{' '}
-                  <span className="text-gray-900 dark:text-gray-100">{question.questionHindi}</span>
-                </div>
-                <div>
-                  <div className="badge badge-neutral">{qIndex + 1}.</div>{' '}
                   <span className="text-gray-900 dark:text-gray-100">{question.questionEnglish}</span>
                 </div>
+                <div>
+                  <span className="text-gray-900 dark:text-gray-100">{question.questionHindi}</span>
+                </div>
+
                 <div className="flex flex-col gap-5 mt-5">
                   {question.questionOptionsHindi.map((option: any, index: number) => {
                     const isCorrectOption = option.id === question.correctAnswer.correctOptionId;
@@ -169,10 +169,10 @@ const Result: React.FC = () => {
                         <label className="label cursor-pointer">
                           <span className="label-text">
                             <div className="flex flex-col">
-                              <label className="text-gray-900 dark:text-gray-100">{option.text}</label>
                               <label className="text-gray-600 dark:text-gray-400">
                                 {question.questionOptionsEnglish[index].text}
                               </label>
+                              <label className="text-gray-900 dark:text-gray-100">{option.text}</label>
                             </div>
                           </span>
                           <input
